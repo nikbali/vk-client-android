@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MAI Tweets</string>
+    <string name="fa_heart_o">\uf08a</string>
+    <string name="fa_retweet">\uf079</string>
+</resources>
