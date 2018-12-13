@@ -11,6 +11,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private Button sign_in;
+    private Button sign_up;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,12 +20,18 @@ public class MainActivity extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.password);
         password.setTransformationMethod(new PasswordTransformationMethod());
 
-        sign_in = (Button) findViewById(R.id.sign_in);
+        sign_in = findViewById(R.id.sign_in);
         sign_in.setOnClickListener(
                 (view) -> {
                     Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
                     startActivity(intent);
                 }
         );
+
+        sign_up = findViewById(R.id.sign_up);
+        sign_up.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, NavigationProfile.class);
+            startActivity(intent);
+        });
     }
 }
