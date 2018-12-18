@@ -9,4 +9,13 @@
     tools:context=".NavigationProfile"
     tools:showIn="@layout/app_bar_navigation_profile">
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_posts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </android.support.v7.widget.RecyclerView>
+
 </android.support.constraint.ConstraintLayout>
