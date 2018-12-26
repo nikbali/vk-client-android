@@ -1,4 +1,4 @@
-package com.example.nibali.constraint_examples.adapters;
+package com.example.nibali.constraint_examples.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.nibali.constraint_examples.R;
-import com.example.nibali.constraint_examples.adapters.listeners.UserClickListener;
+import com.example.nibali.constraint_examples.adapter.listeners.UserClickListener;
 import com.example.nibali.constraint_examples.pojo.User;
 import com.squareup.picasso.Picasso;
 

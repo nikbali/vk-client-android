@@ -1,10 +1,12 @@
-package com.example.nibali.constraint_examples;
+package com.example.nibali.constraint_examples.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
-import com.example.nibali.constraint_examples.adapters.UserAdapter;
+
+import com.example.nibali.constraint_examples.R;
+import com.example.nibali.constraint_examples.adapter.UserAdapter;
 import com.example.nibali.constraint_examples.repository.IUsersRepository;
 import com.example.nibali.constraint_examples.repository.impl.UsersRepository;
 

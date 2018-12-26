@@ -3,10 +3,14 @@
     <string name="app_name">MAI Tweets</string>
     <string name="fa_heart_o">\uf08a</string>
     <string name="fa_retweet">\uf079</string>
-    <string name="title_activity_navigation_profile">NavigationProfile</string>
+    <string name="title_activity_navigation_profile">Profile</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
     <integer name="com_vk_sdk_AppId">6787861</integer>
+    <string name="url_empty_avatar">https://vk.com/images/camera_100.png</string>
+    <string name="about">About</string>
+    <string name="search">Search</string>
+    <string name="news">News</string>
 </resources>

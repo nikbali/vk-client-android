@@ -19,25 +19,26 @@
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProfileActivity" />
-        <activity android:name=".PostsActivity" />
+
+
+        <activity android:name=".activity.ProfileActivity" />
+        <activity android:name=".activity.PostsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".NavigationProfile"
+            android:name=".activity.MainActivity"
             android:label="@string/title_activity_navigation_profile"
             android:theme="@style/AppTheme"></activity>
-        <activity android:name=".UsersActivity" />
+        <activity android:name=".activity.UsersActivity" />
     </application>
 
 </manifest>

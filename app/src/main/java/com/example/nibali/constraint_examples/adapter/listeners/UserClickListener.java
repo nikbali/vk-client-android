@@ -1,4 +1,4 @@
-package com.example.nibali.constraint_examples.adapters.listeners;
+package com.example.nibali.constraint_examples.adapter.listeners;
 
 import com.example.nibali.constraint_examples.pojo.User;
 

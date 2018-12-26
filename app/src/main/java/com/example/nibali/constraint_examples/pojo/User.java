@@ -14,6 +14,7 @@ public class User {
     private int followingCount;
     private int followersCount;
 
+    public User(){}
     public User(long id,
                 String imageUrl,
                 String name,

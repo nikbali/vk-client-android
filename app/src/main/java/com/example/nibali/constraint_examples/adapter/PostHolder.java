@@ -1,4 +1,4 @@
-package com.example.nibali.constraint_examples.adapters;
+package com.example.nibali.constraint_examples.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
