@@ -4,12 +4,12 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.nibali.constraint_examples.activity.LoginActivity;
 import com.example.nibali.constraint_examples.di.application.AppComponent;
 import com.example.nibali.constraint_examples.di.application.AppModule;
 import com.example.nibali.constraint_examples.di.application.DaggerAppComponent;
+import com.example.nibali.constraint_examples.di.net.NetModule;
 import com.example.nibali.constraint_examples.di.user.UserComponent;
 import com.example.nibali.constraint_examples.di.user.UserModule;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
@@ -39,8 +39,8 @@ public class Application extends android.app.Application  {
 
         appComponent = DaggerAppComponent.builder()
                 .appModule(new AppModule(this))
+                .netModule(new NetModule("https://api.vk.com/method/"))
                 .build();
-
 
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
@@ -61,10 +61,11 @@ public class Application extends android.app.Application  {
         return userComponent;
     }
 
-    public UserComponent createUserComponent(VKApiUser user) {
-        userComponent = appComponent.plus(new UserModule(user));
+    public UserComponent createUserComponent(final VKApiUser user,final VKAccessToken vkAccessToken) {
+        userComponent = appComponent.plus(new UserModule(user, vkAccessToken));
         return userComponent;
     }
+
 
     public void releaseUserComponent() {
         userComponent = null;

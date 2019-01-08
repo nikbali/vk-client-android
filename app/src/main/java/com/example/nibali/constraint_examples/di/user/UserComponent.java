@@ -11,14 +11,4 @@ import dagger.Subcomponent;
 @Subcomponent(modules = {UserModule.class})
 public interface UserComponent {
     void inject(MainActivity mainActivity);
-
-    /*void inject(NowPlayingFragment nowPlayingFragment);
-
-    void inject(PlaybackQueueFragment playbackQueueFragment);
-
-    void inject(BaseMusicFragment baseMusicFragment);
-
-    void inject(AddTrackToPlaylistDialogFragment addTrackToPlaylistDialogFragment);
-
-    void inject(RadioFragment radioFragment);*/
 }

@@ -54,13 +54,7 @@ public class MainActivity extends AbstractBaseActivity{
         setSupportActionBar(binding.toolbar);
 
         createNavigationDrawer();
-
-
     }
-
-
-
-
     private void createNavigationDrawer() {
         String photo = getString(R.string.url_empty_avatar);
         try {
