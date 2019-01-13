@@ -14,6 +14,7 @@ import com.example.nibali.constraint_examples.*;
 import com.example.nibali.constraint_examples.api.UserApi;
 import com.example.nibali.constraint_examples.base.AbstractBaseActivity;
 import com.example.nibali.constraint_examples.databinding.ActivityLoginBinding;
+import com.example.nibali.constraint_examples.pojo.ApiResponse;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
@@ -43,7 +44,7 @@ public class LoginActivity extends AbstractBaseActivity {
 
     @Override
     protected void inject() {
-        ((Application) getApplication()).getAppComponent().inject(this);
+        ((Application) getApplication()).getNetComponent().inject(this);
     }
 
     @Override
@@ -57,7 +58,6 @@ public class LoginActivity extends AbstractBaseActivity {
         binding.signIn.setOnClickListener(view -> {
             VKSdk.login(this, VKScope.STATUS, VKScope.FRIENDS, VKScope.MESSAGES);
         });
-
     }
 
     @Override
@@ -81,12 +81,12 @@ public class LoginActivity extends AbstractBaseActivity {
     private void createUserComponentAndLaunchMainActivity(final VKAccessToken vkAccessToken ) {
 
         //Create a retrofit call object
-        Call<List<VKApiUser>> user = retrofit.create(UserApi.class).getProfileInfo();
+        Call<ApiResponse<List<VKApiUser>>> user = retrofit.create(UserApi.class).getProfileInfo(vkAccessToken.accessToken);
 
-        user.enqueue(new Callback<List<VKApiUser>>() {
+        user.enqueue(new Callback<ApiResponse<List<VKApiUser>>>() {
             @Override
-            public void onResponse(Call<List<VKApiUser>> call, Response<List<VKApiUser>> response) {
-                List<VKApiUser> users =  response.body();
+            public void onResponse(Call<ApiResponse<List<VKApiUser>>>call, Response<ApiResponse<List<VKApiUser>>> response) {
+                List<VKApiUser> users =  response.body().getResponse();
                 ((Application) getApplication()).createUserComponent(users.get(0), vkAccessToken);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -98,26 +98,12 @@ public class LoginActivity extends AbstractBaseActivity {
 
             }
             @Override
-            public void onFailure(Call<List<VKApiUser>> call, Throwable t) {
-                //Set the error to the textview
-
+            public void onFailure(Call<ApiResponse<List<VKApiUser>>> call, Throwable t) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Жесть!", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
-/*
-        VKApi.users().get(VKParameters.from(VKApiConst.FIELDS, "photo_big")).executeWithListener(new VKRequest.VKRequestListener() {
-            @Override
-            public void onComplete(VKResponse response) {
-                VKList<VKApiUser> users = (VKList<VKApiUser>) response.parsedModel;
-                ((Application) getApplication()).createUserComponent(users.get(0), vkAccessToken);
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
 
-                overridePendingTransition(0, 0);
-
-                finish();
-            }
-        });
-*/
     }
 }

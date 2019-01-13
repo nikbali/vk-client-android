@@ -3,26 +3,33 @@ package com.example.nibali.constraint_examples.di.application;
 import android.app.Application;
 import android.content.Context;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 @Module
 public class AppModule {
 
-    private final Application application;
+    Application mApplication;
 
     public AppModule(Application application) {
-        this.application = application;
+        mApplication = application;
     }
 
     @Provides
     @Singleton
-    Context provideApplicationContext() {
-        return application;
+    Application providesApplication() {
+        return mApplication;
     }
 
 }

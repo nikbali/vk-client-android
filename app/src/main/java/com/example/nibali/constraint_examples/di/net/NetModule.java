@@ -1,6 +1,8 @@
 package com.example.nibali.constraint_examples.di.net;
 
 import android.app.Application;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -17,22 +19,28 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class NetModule {
+    String mBaseUrl;
 
-    private String mBaseUrl;
-
-    // Constructor needs one parameter to instantiate.
     public NetModule(String baseUrl) {
         this.mBaseUrl = baseUrl;
     }
+
     @Provides
     @Singleton
-    Cache provideHttpCache(Application application) {
-        int cacheSize = 10 * 1024 * 1024;
+    SharedPreferences providesSharedPreferences(Application application) {
+        return PreferenceManager.getDefaultSharedPreferences(application);
+    }
+
+    @Provides
+    @Singleton
+    Cache provideOkHttpCache(Application application) {
+        int cacheSize = 10 * 1024 * 1024; // 10 MiB
         Cache cache = new Cache(application.getCacheDir(), cacheSize);
         return cache;
     }
 
-    @Provides
+
+    @Provides  // Dagger will only look for methods annotated with @Provides
     @Singleton
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -42,19 +50,19 @@ public class NetModule {
 
     @Provides
     @Singleton
-    OkHttpClient provideOkhttpClient(Cache cache) {
-        OkHttpClient.Builder client = new OkHttpClient.Builder();
-        client.cache(cache);
-        return client.build();
+    OkHttpClient provideOkHttpClient(Cache cache) {
+        OkHttpClient okHttpClient = new OkHttpClient.Builder().cache(cache).build();
+        return okHttpClient;
     }
 
     @Provides
     @Singleton
     Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
-        return new Retrofit.Builder()
-                .baseUrl(URL)
+        Retrofit retrofit = new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(mBaseUrl)
                 .client(okHttpClient)
                 .build();
+        return retrofit;
     }
 }

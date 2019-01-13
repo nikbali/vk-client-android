@@ -8,8 +8,10 @@ import android.widget.ImageView;
 import com.example.nibali.constraint_examples.activity.LoginActivity;
 import com.example.nibali.constraint_examples.di.application.AppComponent;
 import com.example.nibali.constraint_examples.di.application.AppModule;
-import com.example.nibali.constraint_examples.di.application.DaggerAppComponent;
+import com.example.nibali.constraint_examples.di.net.DaggerNetComponent;
+import com.example.nibali.constraint_examples.di.net.NetComponent;
 import com.example.nibali.constraint_examples.di.net.NetModule;
+import com.example.nibali.constraint_examples.di.user.DaggerUserComponent;
 import com.example.nibali.constraint_examples.di.user.UserComponent;
 import com.example.nibali.constraint_examples.di.user.UserModule;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
@@ -21,7 +23,7 @@ import com.vk.sdk.VKSdk;
 import com.vk.sdk.api.model.VKApiUser;
 
 public class Application extends android.app.Application  {
-    private AppComponent appComponent;
+    private NetComponent netComponent;
     private UserComponent userComponent;
 
     VKAccessTokenTracker vkAccessTokenTracker = new VKAccessTokenTracker() {
@@ -37,10 +39,11 @@ public class Application extends android.app.Application  {
     public void onCreate() {
         super.onCreate();
 
-        appComponent = DaggerAppComponent.builder()
+        netComponent = DaggerNetComponent.builder()
                 .appModule(new AppModule(this))
                 .netModule(new NetModule("https://api.vk.com/method/"))
                 .build();
+
 
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
@@ -53,8 +56,8 @@ public class Application extends android.app.Application  {
         });
     }
 
-    public AppComponent getAppComponent() {
-        return appComponent;
+    public NetComponent getNetComponent() {
+        return netComponent;
     }
 
     public UserComponent getUserComponent() {
@@ -62,7 +65,10 @@ public class Application extends android.app.Application  {
     }
 
     public UserComponent createUserComponent(final VKApiUser user,final VKAccessToken vkAccessToken) {
-        userComponent = appComponent.plus(new UserModule(user, vkAccessToken));
+        userComponent = DaggerUserComponent.builder()
+                .netComponent(netComponent)
+                .userModule(new UserModule(user, vkAccessToken))
+                .build();
         return userComponent;
     }
 
