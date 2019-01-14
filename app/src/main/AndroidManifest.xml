@@ -28,7 +28,6 @@
 
 
         <activity android:name=".activity.ProfileActivity" />
-        <activity android:name=".activity.PostsActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

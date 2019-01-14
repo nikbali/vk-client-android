@@ -19,12 +19,12 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        menu = (Button) findViewById(R.id.buttonMenu);
-        menu.setOnClickListener(
-                (view) -> {
-                    Intent intent = new Intent(ProfileActivity.this, PostsActivity.class);
-                    startActivity(intent);
-                }
-        );
+//        menu = (Button) findViewById(R.id.buttonMenu);
+//        menu.setOnClickListener(
+//                (view) -> {
+//                    Intent intent = new Intent(ProfileActivity.this, PostsActivity.class);
+//                    startActivity(intent);
+//                }
+//        );
     }
 }

@@ -10,6 +10,7 @@ import com.example.nibali.constraint_examples.R;
 import com.example.nibali.constraint_examples.base.AbstractBaseActivity;
 
 import com.example.nibali.constraint_examples.databinding.ActivityMainBinding;
+import com.example.nibali.constraint_examples.fragment.NewsfeedFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -37,8 +38,7 @@ public class MainActivity extends AbstractBaseActivity{
     private PrimaryDrawerItem newsItem;
     private PrimaryDrawerItem searchItem;
 
-    //TODO свой фрагмент вставить
-   // private AudioListFragment myAudioFragment;
+    private NewsfeedFragment newsfeedFragment;
 
     private ActivityMainBinding binding;
 
@@ -54,6 +54,12 @@ public class MainActivity extends AbstractBaseActivity{
         setSupportActionBar(binding.toolbar);
 
         createNavigationDrawer();
+
+        newsfeedFragment = new NewsfeedFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_main, newsfeedFragment, NewsfeedFragment.class.getName())
+                .commit();
+
     }
     private void createNavigationDrawer() {
         String photo = getString(R.string.url_empty_avatar);
@@ -66,7 +72,7 @@ public class MainActivity extends AbstractBaseActivity{
                 .withHeaderBackground(R.drawable.side_nav_bar)
                 .addProfiles(
                         new ProfileDrawerItem()
-                                .withEmail(user.first_name)
+                                .withEmail(user.first_name +" "+  user.last_name)
                                 .withIcon(photo)
                 )
                 .build();

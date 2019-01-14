@@ -45,6 +45,8 @@ public class NetModule {
     Gson provideGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+        //gsonBuilder.registerTypeAdapter(Book.class, new BookDeserializer());
+        //gsonBuilder.registerTypeAdapter(Author.class, new AuthorDeserializer());
         return gsonBuilder.create();
     }
 

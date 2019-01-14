@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-
-    <com.sothree.slidinguppanel.SlidingUpPanelLayout
-        android:id="@+id/slidinglayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom"
-        sothree:umanoPanelHeight="@dimen/bottom_sheet_height"
-        sothree:umanoShadowHeight="4dp">
-
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/activity_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            tools:context="com.icapps.vkmusic.activity.MainActivity">
+            tools:context="com.example.nibali.constraint_examples.activity.MainActivity">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -40,12 +30,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
         </android.support.constraint.ConstraintLayout>
-
-        <FrameLayout
-            android:id="@+id/content_slidingpanel"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </com.sothree.slidinguppanel.SlidingUpPanelLayout>
 
 </layout>
