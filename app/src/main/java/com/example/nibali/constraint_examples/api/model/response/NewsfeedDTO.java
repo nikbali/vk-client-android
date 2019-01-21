@@ -13,11 +13,8 @@ public class NewsfeedDTO {
     @SerializedName("items")
     public List<VKApiNews> items;
 
-    @SerializedName("profiles")
-    public List<VKApiUser> profiles;
-
     @SerializedName("groups")
-    public List<VKApiCommunity> groups;
+    public List<VKApiGroup> groups;
 
     @SerializedName("next_from")
     public String nextFrom;

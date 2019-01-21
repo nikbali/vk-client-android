@@ -9,6 +9,7 @@ import com.example.nibali.constraint_examples.activity.MainActivity;
 import com.example.nibali.constraint_examples.api.NewsfeedApi;
 import com.example.nibali.constraint_examples.api.UserApi;
 import com.example.nibali.constraint_examples.api.model.response.NewsfeedDTO;
+import com.example.nibali.constraint_examples.api.model.response.VKApiGroup;
 import com.example.nibali.constraint_examples.api.model.response.VKApiNews;
 import com.example.nibali.constraint_examples.pojo.ApiResponse;
 import com.example.nibali.constraint_examples.pojo.Post;
@@ -34,12 +35,13 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class PostsRepository implements IPostsRepository {
-    @Inject Retrofit retrofit;
-    private VKAccessToken token;
+    Retrofit retrofit;
+    VKAccessToken token;
 
-
-    public PostsRepository(VKAccessToken vkAccessToken) {
+    @Inject
+    public PostsRepository(VKAccessToken vkAccessToken, Retrofit retrofit) {
         this.token = vkAccessToken;
+        this.retrofit = retrofit;
     }
 
     List<Post> postList = new ArrayList<>();
@@ -47,14 +49,14 @@ public class PostsRepository implements IPostsRepository {
     @Override
     public List<Post> getPosts() {
 
-        Call<ApiResponse<List<NewsfeedDTO>>> newsfeed = retrofit
+        Call<ApiResponse<NewsfeedDTO>> newsfeed = retrofit
                 .create(NewsfeedApi.class)
                 .getNewsfeed("post", token.accessToken, 10, "5.92");
 
-        newsfeed.enqueue(new Callback<ApiResponse<List<NewsfeedDTO>>>() {
+        newsfeed.enqueue(new Callback<ApiResponse<NewsfeedDTO>>() {
             @Override
-            public void onResponse(Call<ApiResponse<List<NewsfeedDTO>>> call, Response<ApiResponse<List<NewsfeedDTO>>> response) {
-                List<NewsfeedDTO> newsfeedDTOList = null;
+            public void onResponse(Call<ApiResponse<NewsfeedDTO>> call, Response<ApiResponse<NewsfeedDTO>> response) {
+                NewsfeedDTO newsfeedDTOList = null;
                 if (response.body() != null) {
                     newsfeedDTOList = response.body().getResponse();
                     postList.addAll(convertToPost(newsfeedDTOList));
@@ -63,44 +65,40 @@ public class PostsRepository implements IPostsRepository {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<List<NewsfeedDTO>>> call, Throwable t) {
+            public void onFailure(Call<ApiResponse<NewsfeedDTO>> call, Throwable t) {
                 throw new RuntimeException(t);
             }
         });
         return postList;
     }
 
-    private List<Post> convertToPost(final List<NewsfeedDTO> postDTO) {
+    private List<Post> convertToPost(final NewsfeedDTO newsfeedDTO) {
         List<Post> postList = new ArrayList<>();
         Map<Integer, User> userMap = new HashMap<>();
 
-        for (NewsfeedDTO newsfeedDTO : postDTO) {
-            for (VKApiCommunity vkApiCommunity : newsfeedDTO.groups) {
-                userMap.put(vkApiCommunity.id, new User(vkApiCommunity.id,
-                        vkApiCommunity.photo_50,
-                        vkApiCommunity.name,
-                        vkApiCommunity.name,
+            for (VKApiGroup group : newsfeedDTO.groups) {
+                userMap.put(group.gid, new User(group.gid,
+                        group.photo_medium,
+                        group.name,
+                        group.name,
                         null,
                         null,
                         0,
                         0));
             }
             for (VKApiNews vkApiNews : newsfeedDTO.items) {
-                if (vkApiNews.source_id < 0) {
-                    if (vkApiNews.hasAttachments()) {
+                if (vkApiNews.source_id < 0 && vkApiNews.attachment != null && vkApiNews.attachment.type.equals("photo")) {
                         postList.add(new Post(userMap.get(Math.abs(vkApiNews.source_id)),
                                 (long) vkApiNews.post_id,
                                 String.valueOf(vkApiNews.date),
                                 vkApiNews.text,
-                                (long) vkApiNews.reposts_count,
-                                (long) vkApiNews.like_count,
-                                vkApiNews.attachments.get(0).getPhoto().photo_130));
-
-                    }
+                                11L,
+                                11L,
+                                vkApiNews.attachment.photo.src_big));
 
                 }
             }
-        }
+
         return postList;
     }
 

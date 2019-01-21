@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 public interface NewsfeedApi {
 
     @GET("newsfeed.get")
-    Call<ApiResponse<List<NewsfeedDTO>>> getNewsfeed(   @Query("filters") String filters,
+    Call<ApiResponse<NewsfeedDTO>> getNewsfeed(   @Query("filters") String filters,
                                                         @Query("access_token") String token,
                                                         @Query("count") Integer count,
                                                         @Query("version") String version);

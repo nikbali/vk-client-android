@@ -34,8 +34,8 @@ public class UserModule {
 
     @Provides
     @UserScope
-    IPostsRepository provideIPostsRepository() {
-        return new PostsRepository(token);
+    IPostsRepository provideIPostsRepository(Retrofit retrofit) {
+        return new PostsRepository(token, retrofit);
     }
 
 }

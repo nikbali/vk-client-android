@@ -57,7 +57,7 @@ public class LoginActivity extends AbstractBaseActivity {
         }
         ActivityLoginBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         binding.signIn.setOnClickListener(view -> {
-            VKSdk.login(this, VKScope.STATUS, VKScope.FRIENDS, VKScope.MESSAGES);
+            VKSdk.login(this, VKScope.STATUS, VKScope.FRIENDS, VKScope.MESSAGES,VKScope.WALL);
         });
     }
 
