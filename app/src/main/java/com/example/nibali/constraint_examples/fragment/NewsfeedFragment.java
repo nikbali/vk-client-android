@@ -1,6 +1,7 @@
 package com.example.nibali.constraint_examples.fragment;
 
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,23 +9,41 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.nibali.constraint_examples.Application;
 import com.example.nibali.constraint_examples.R;
+import com.example.nibali.constraint_examples.activity.LoginActivity;
+import com.example.nibali.constraint_examples.activity.MainActivity;
 import com.example.nibali.constraint_examples.adapter.PostAdapter;
+import com.example.nibali.constraint_examples.api.NewsfeedApi;
+import com.example.nibali.constraint_examples.api.UserApi;
 import com.example.nibali.constraint_examples.base.AbstractBaseFragment;
 import com.example.nibali.constraint_examples.databinding.FragmentNewsBinding;
+import com.example.nibali.constraint_examples.pojo.ApiResponse;
 import com.example.nibali.constraint_examples.repository.IPostsRepository;
 import com.example.nibali.constraint_examples.repository.impl.PostsRepository;
+import com.vk.sdk.VKAccessToken;
+import com.vk.sdk.api.model.VKApiUser;
+
+import java.util.List;
 
 import javax.annotation.Nullable;
+import javax.inject.Inject;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class NewsfeedFragment extends AbstractBaseFragment {
-    private FragmentNewsBinding fragmentNewsBinding;
 
-    private RecyclerView recyclerView;
+
+    @Inject
+    IPostsRepository postsRepository;
+
+    private FragmentNewsBinding fragmentNewsBinding;
     private PostAdapter postAdapter;
-    private IPostsRepository postsRepository = new PostsRepository();
 
 
     @Override
@@ -52,4 +71,5 @@ public class NewsfeedFragment extends AbstractBaseFragment {
         fragmentNewsBinding.recyclerViewPosts.setAdapter(postAdapter);
         return fragmentNewsBinding.getRoot();
     }
+
 }

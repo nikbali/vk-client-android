@@ -14,7 +14,6 @@ import retrofit2.http.Query;
 
 public interface UserApi {
 
-    //fields=photo_big&v=5.92&access_token=
     @GET("users.get?fields=photo_big&v=5.92")
     Call<ApiResponse<List<VKApiUser>>> getProfileInfo(@Query("access_token") String token);
 

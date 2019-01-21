@@ -44,7 +44,8 @@ public class LoginActivity extends AbstractBaseActivity {
 
     @Override
     protected void inject() {
-        ((Application) getApplication()).getNetComponent().inject(this);
+
+        ((Application) getApplication()).getAppComponent().inject(this);
     }
 
     @Override

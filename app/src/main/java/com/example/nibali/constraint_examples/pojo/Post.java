@@ -1,6 +1,13 @@
 package com.example.nibali.constraint_examples.pojo;
 
+import android.databinding.BindingAdapter;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.example.nibali.constraint_examples.R;
 import com.google.common.base.Objects;
+import com.squareup.picasso.Picasso;
 
 public class Post {
     private User user;
@@ -112,5 +119,16 @@ public class Post {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @BindingAdapter({"app:imageUrl"})
+    public static void loadImage(ImageView view, String imageUrl) {
+        Picasso.get().load(imageUrl).into(view);
+        view.setVisibility(imageUrl != null ? View.VISIBLE : View.GONE);
+    }
+
+    @BindingAdapter("android:longText")
+    public static void setLongText(TextView view, long number) {
+        view.setText(String.valueOf(number));
     }
 }

@@ -1,9 +1,12 @@
 package com.example.nibali.constraint_examples.di.user;
 
+import com.example.nibali.constraint_examples.repository.IPostsRepository;
+import com.example.nibali.constraint_examples.repository.impl.PostsRepository;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.api.model.VKApiUser;
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
 
 
 @Module
@@ -27,6 +30,12 @@ public class UserModule {
     @UserScope
     VKAccessToken provideAccessToken() {
         return token;
+    }
+
+    @Provides
+    @UserScope
+    IPostsRepository provideIPostsRepository() {
+        return new PostsRepository(token);
     }
 
 }
