@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.nibali.constraint_examples.R;
 import com.example.nibali.constraint_examples.adapter.listeners.UserClickListener;
-import com.example.nibali.constraint_examples.pojo.User;
+import com.example.nibali.constraint_examples.entity.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -70,8 +70,8 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
         public void binding(final User user){
             nameTextView.setText(user.getName());
-            nickNameTextView.setText(user.getNick());
-            Picasso.get().load(user.getImageUrl()).into(userImageView);
+            nickNameTextView.setText(user.getName());
+            Picasso.get().load(user.getPhoto()).into(userImageView);
         }
 
     }

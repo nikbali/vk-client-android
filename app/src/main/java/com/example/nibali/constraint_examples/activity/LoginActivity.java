@@ -2,11 +2,7 @@ package com.example.nibali.constraint_examples.activity;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.nibali.constraint_examples.Application;
@@ -14,19 +10,13 @@ import com.example.nibali.constraint_examples.*;
 import com.example.nibali.constraint_examples.api.UserApi;
 import com.example.nibali.constraint_examples.base.AbstractBaseActivity;
 import com.example.nibali.constraint_examples.databinding.ActivityLoginBinding;
-import com.example.nibali.constraint_examples.pojo.ApiResponse;
+import com.example.nibali.constraint_examples.api.BaseResponse;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKCallback;
 import com.vk.sdk.VKScope;
 import com.vk.sdk.VKSdk;
-import com.vk.sdk.api.VKApi;
-import com.vk.sdk.api.VKApiConst;
 import com.vk.sdk.api.VKError;
-import com.vk.sdk.api.VKParameters;
-import com.vk.sdk.api.VKRequest;
-import com.vk.sdk.api.VKResponse;
 import com.vk.sdk.api.model.VKApiUser;
-import com.vk.sdk.api.model.VKList;
 
 import java.util.List;
 
@@ -82,24 +72,23 @@ public class LoginActivity extends AbstractBaseActivity {
     private void createUserComponentAndLaunchMainActivity(final VKAccessToken vkAccessToken ) {
 
         //Create a retrofit call object
-        Call<ApiResponse<List<VKApiUser>>> user = retrofit.create(UserApi.class).getProfileInfo(vkAccessToken.accessToken);
+        Call<BaseResponse<List<VKApiUser>>> user = retrofit.create(UserApi.class).getProfileInfo(vkAccessToken.accessToken);
 
-        user.enqueue(new Callback<ApiResponse<List<VKApiUser>>>() {
+        user.enqueue(new Callback<BaseResponse<List<VKApiUser>>>() {
             @Override
-            public void onResponse(Call<ApiResponse<List<VKApiUser>>>call, Response<ApiResponse<List<VKApiUser>>> response) {
+            public void onResponse(Call<BaseResponse<List<VKApiUser>>>call, Response<BaseResponse<List<VKApiUser>>> response) {
                 List<VKApiUser> users =  response.body().getResponse();
                 ((Application) getApplication()).createUserComponent(users.get(0), vkAccessToken);
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
-
                 overridePendingTransition(0, 0);
 
                 finish();
 
             }
             @Override
-            public void onFailure(Call<ApiResponse<List<VKApiUser>>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<List<VKApiUser>>> call, Throwable t) {
                 Toast toast = Toast.makeText(getApplicationContext(),
                         "Жесть!", Toast.LENGTH_SHORT);
                 toast.show();

@@ -1,39 +1,45 @@
 package com.example.nibali.constraint_examples.repository.impl;
 
-import android.content.Intent;
-import android.widget.Toast;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 
-import com.example.nibali.constraint_examples.Application;
-import com.example.nibali.constraint_examples.activity.LoginActivity;
-import com.example.nibali.constraint_examples.activity.MainActivity;
 import com.example.nibali.constraint_examples.api.NewsfeedApi;
-import com.example.nibali.constraint_examples.api.UserApi;
-import com.example.nibali.constraint_examples.api.model.response.NewsfeedDTO;
-import com.example.nibali.constraint_examples.api.model.response.VKApiGroup;
-import com.example.nibali.constraint_examples.api.model.response.VKApiNews;
-import com.example.nibali.constraint_examples.pojo.ApiResponse;
-import com.example.nibali.constraint_examples.pojo.Post;
-import com.example.nibali.constraint_examples.pojo.User;
+import com.example.nibali.constraint_examples.api.dto.NewsfeedDTO;
+import com.example.nibali.constraint_examples.api.dto.VKGroupDTO;
+import com.example.nibali.constraint_examples.api.dto.VKNewsDTO;
+import com.example.nibali.constraint_examples.api.BaseResponse;
+import com.example.nibali.constraint_examples.api.dto.VkAttachmentDTO;
+import com.example.nibali.constraint_examples.entity.AttachmentType;
+import com.example.nibali.constraint_examples.entity.Group;
+import com.example.nibali.constraint_examples.entity.Owner;
+import com.example.nibali.constraint_examples.entity.Photo;
+import com.example.nibali.constraint_examples.entity.Post;
+import com.example.nibali.constraint_examples.entity.User;
 import com.example.nibali.constraint_examples.repository.IPostsRepository;
-import com.example.nibali.constraint_examples.repository.IUsersRepository;
 import com.google.common.collect.Lists;
 import com.vk.sdk.VKAccessToken;
-import com.vk.sdk.api.model.VKApiCommunity;
-import com.vk.sdk.api.model.VKApiUser;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.inject.Inject;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+@Data
 public class PostsRepository implements IPostsRepository {
     Retrofit retrofit;
     VKAccessToken token;
@@ -49,14 +55,14 @@ public class PostsRepository implements IPostsRepository {
     @Override
     public List<Post> getPosts() {
 
-        Call<ApiResponse<NewsfeedDTO>> newsfeed = retrofit
+        Call<BaseResponse<NewsfeedDTO>> newsfeed = retrofit
                 .create(NewsfeedApi.class)
                 .getNewsfeed("post", token.accessToken, 10, "5.92");
 
-        newsfeed.enqueue(new Callback<ApiResponse<NewsfeedDTO>>() {
+        newsfeed.enqueue(new Callback<BaseResponse<NewsfeedDTO>>() {
             @Override
-            public void onResponse(Call<ApiResponse<NewsfeedDTO>> call, Response<ApiResponse<NewsfeedDTO>> response) {
-                NewsfeedDTO newsfeedDTOList = null;
+            public void onResponse(@NonNull Call<BaseResponse<NewsfeedDTO>> call, @NonNull Response<BaseResponse<NewsfeedDTO>> response) {
+                NewsfeedDTO newsfeedDTOList;
                 if (response.body() != null) {
                     newsfeedDTOList = response.body().getResponse();
                     postList.addAll(convertToPost(newsfeedDTOList));
@@ -65,7 +71,7 @@ public class PostsRepository implements IPostsRepository {
             }
 
             @Override
-            public void onFailure(Call<ApiResponse<NewsfeedDTO>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<NewsfeedDTO>> call, Throwable t) {
                 throw new RuntimeException(t);
             }
         });
@@ -73,33 +79,39 @@ public class PostsRepository implements IPostsRepository {
     }
 
     private List<Post> convertToPost(final NewsfeedDTO newsfeedDTO) {
-        List<Post> postList = new ArrayList<>();
-        Map<Integer, User> userMap = new HashMap<>();
+        List<Post> posts = new ArrayList<>();
+        Map<Integer, Owner> groupMap = new HashMap<>();
 
-            for (VKApiGroup group : newsfeedDTO.groups) {
-                userMap.put(group.gid, new User(group.gid,
-                        group.photo_medium,
-                        group.name,
-                        group.name,
-                        null,
-                        null,
-                        0,
-                        0));
+        for (VKGroupDTO group : newsfeedDTO.getGroups()) {
+            if (group.getType().equals("page") || group.getType().equals("group")) {
+                groupMap.put(group.getGid(),
+                        new Group(group.getGid(), group.getName(), group.getPhoto_medium()));
             }
-            for (VKApiNews vkApiNews : newsfeedDTO.items) {
-                if (vkApiNews.source_id < 0 && vkApiNews.attachment != null && vkApiNews.attachment.type.equals("photo")) {
-                        postList.add(new Post(userMap.get(Math.abs(vkApiNews.source_id)),
-                                (long) vkApiNews.post_id,
-                                String.valueOf(vkApiNews.date),
-                                vkApiNews.text,
-                                11L,
-                                11L,
-                                vkApiNews.attachment.photo.src_big));
-
+        }
+        for (VKNewsDTO vkNewsDTO : newsfeedDTO.getItems()) {
+            if (vkNewsDTO.getSource_id() < 0) {
+                List<Photo> attachments = Lists.newArrayList();
+                if(vkNewsDTO.getAttachments() != null){
+                    for (VkAttachmentDTO vkAttachmentDTO : vkNewsDTO.getAttachments()) {
+                        if (vkAttachmentDTO.getType().equals(AttachmentType.PHOTO.getDescription())) {
+                            Photo photo = new Photo();
+                            photo.setType(AttachmentType.PHOTO);
+                            photo.setPhoto_604(vkAttachmentDTO.getPhoto().getSrc_big());
+                            attachments.add(photo);
+                        }
+                    }
                 }
+                posts.add(
+                        new Post(vkNewsDTO.getPost_id(),
+                                groupMap.get(Math.abs(vkNewsDTO.getSource_id())),
+                                new Date(vkNewsDTO.getDate() * 1000L),
+                                vkNewsDTO.getText(),
+                                0,
+                                0,
+                                attachments));
             }
-
-        return postList;
+        }
+        return posts;
     }
 
 }

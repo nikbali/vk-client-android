@@ -1,7 +1,6 @@
 package com.example.nibali.constraint_examples.repository;
 
-import com.example.nibali.constraint_examples.pojo.Post;
-import com.example.nibali.constraint_examples.pojo.User;
+import com.example.nibali.constraint_examples.entity.Post;
 
 import java.util.List;
 

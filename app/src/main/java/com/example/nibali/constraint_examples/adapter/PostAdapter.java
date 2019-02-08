@@ -4,14 +4,12 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nibali.constraint_examples.R;
 import com.example.nibali.constraint_examples.databinding.PostItemBinding;
-import com.example.nibali.constraint_examples.pojo.Post;
+import com.example.nibali.constraint_examples.entity.Post;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostHolder>  {
