@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.example.nibali.constraint_examples.activity.LoginActivity;
+import com.example.nibali.constraint_examples.ui.activity.LoginActivity;
 import com.example.nibali.constraint_examples.di.application.AppComponent;
 import com.example.nibali.constraint_examples.di.application.AppModule;
 import com.example.nibali.constraint_examples.di.application.DaggerAppComponent;

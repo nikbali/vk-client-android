@@ -13,16 +13,22 @@ import com.example.nibali.constraint_examples.adapter.listeners.UserClickListene
 import com.example.nibali.constraint_examples.entity.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
     private List<User> users;
     private UserClickListener userClickListener;
 
-    public UserAdapter(final List<User> users,
-                       final UserClickListener userClickListener) {
-        this.users = users;
+    public UserAdapter(final UserClickListener userClickListener) {
+        this.users = new ArrayList<>();
         this.userClickListener = userClickListener;
+    }
+
+    public void changeDataSet(@NonNull List<User> users) {
+        this.users.clear();
+        this.users.addAll(users);
+        notifyDataSetChanged();
     }
 
 

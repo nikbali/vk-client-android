@@ -1,4 +1,4 @@
-package com.example.nibali.constraint_examples.fragment;
+package com.example.nibali.constraint_examples.ui.fragment.news;
 
 
 import android.databinding.DataBindingUtil;

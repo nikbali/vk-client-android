@@ -1,4 +1,4 @@
-package com.example.nibali.constraint_examples.activity;
+package com.example.nibali.constraint_examples.ui.activity;
 
 
 import android.databinding.*;
@@ -10,7 +10,8 @@ import com.example.nibali.constraint_examples.R;
 import com.example.nibali.constraint_examples.base.AbstractBaseActivity;
 
 import com.example.nibali.constraint_examples.databinding.ActivityMainBinding;
-import com.example.nibali.constraint_examples.fragment.NewsfeedFragment;
+import com.example.nibali.constraint_examples.ui.fragment.friends.FriendsFragment;
+import com.example.nibali.constraint_examples.ui.fragment.news.NewsfeedFragment;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
@@ -36,9 +37,11 @@ public class MainActivity extends AbstractBaseActivity{
 
     private Drawer drawer;
     private PrimaryDrawerItem newsItem;
+    private PrimaryDrawerItem friendsItem;
     private PrimaryDrawerItem searchItem;
 
     private NewsfeedFragment newsfeedFragment;
+    private FriendsFragment friendsFragment;
 
     private ActivityMainBinding binding;
 
@@ -56,6 +59,7 @@ public class MainActivity extends AbstractBaseActivity{
         createNavigationDrawer();
 
         newsfeedFragment = new NewsfeedFragment();
+        friendsFragment = new FriendsFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_main, newsfeedFragment, NewsfeedFragment.class.getName())
                 .commit();
@@ -97,6 +101,13 @@ public class MainActivity extends AbstractBaseActivity{
 
                     return true;
                 });
+        friendsItem = new PrimaryDrawerItem()
+                .withName(R.string.friends)
+                .withIcon(GoogleMaterial.Icon.gmd_event)
+                .withOnDrawerItemClickListener((view, position, drawerItem) -> {
+                    showFriendFragment();
+                    return true;
+                });
 
         searchItem = new PrimaryDrawerItem()
                 .withName(R.string.search)
@@ -112,6 +123,7 @@ public class MainActivity extends AbstractBaseActivity{
                 .withAccountHeader(header)
                 .addDrawerItems(
                         newsItem,
+                        friendsItem,
                         searchItem
                 )
                 .addStickyDrawerItems(aboutItem)
@@ -126,5 +138,12 @@ public class MainActivity extends AbstractBaseActivity{
         });
     }
 
+    private void showFriendFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_main, friendsFragment, FriendsFragment.class.getName())
+                .commit();
 
+        drawer.closeDrawer();
+        drawer.setSelection(friendsItem, false);
+    }
 }

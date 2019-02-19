@@ -4,7 +4,9 @@ import com.example.nibali.constraint_examples.entity.User;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public interface IUsersRepository {
-    List<User> getUsers();
+    Observable<List<User>> getFriends();
     User getCurrentUser();
 }

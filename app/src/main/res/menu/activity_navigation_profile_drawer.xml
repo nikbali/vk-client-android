@@ -9,6 +9,11 @@
             android:id="@+id/nav_add"
             android:icon="@drawable/ic_menu_add"
             android:title="Add" />
+
+        <item
+            android:id="@+id/friend"
+            android:icon="@drawable/ic_menu_add"
+            android:title="Friends" />
         <item
             android:id="@+id/nav_posts"
             android:icon="@drawable/ic_menu_post"
