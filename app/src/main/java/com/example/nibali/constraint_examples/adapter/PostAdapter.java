@@ -23,6 +23,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostHolder>  {
     public void setData(List<Post> data) {
         posts.clear();
         posts.addAll(data);
+        notifyDataSetChanged();
     }
 
     @NonNull

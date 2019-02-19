@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 
 import com.example.nibali.constraint_examples.api.NewsfeedApi;
+import com.example.nibali.constraint_examples.api.UserApi;
+import com.example.nibali.constraint_examples.api.dto.FriendsDTO;
 import com.example.nibali.constraint_examples.api.dto.NewsfeedDTO;
 import com.example.nibali.constraint_examples.api.dto.VKGroupDTO;
 import com.example.nibali.constraint_examples.api.dto.VKNewsDTO;
@@ -31,6 +33,9 @@ import java.util.TimeZone;
 
 import javax.inject.Inject;
 
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -53,29 +58,17 @@ public class PostsRepository implements IPostsRepository {
     List<Post> postList = new ArrayList<>();
 
     @Override
-    public List<Post> getPosts() {
+    public Observable<List<Post>> getPosts() {
 
-        Call<BaseResponse<NewsfeedDTO>> newsfeed = retrofit
+        Observable<BaseResponse<NewsfeedDTO>> newsfeed = retrofit
                 .create(NewsfeedApi.class)
-                .getNewsfeed("post", token.accessToken, 10, "5.92");
+                .getNewsfeed("post", token.accessToken, 10, "5.92")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
 
-        newsfeed.enqueue(new Callback<BaseResponse<NewsfeedDTO>>() {
-            @Override
-            public void onResponse(@NonNull Call<BaseResponse<NewsfeedDTO>> call, @NonNull Response<BaseResponse<NewsfeedDTO>> response) {
-                NewsfeedDTO newsfeedDTOList;
-                if (response.body() != null) {
-                    newsfeedDTOList = response.body().getResponse();
-                    postList.addAll(convertToPost(newsfeedDTOList));
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<NewsfeedDTO>> call, Throwable t) {
-                throw new RuntimeException(t);
-            }
-        });
-        return postList;
+        return newsfeed
+                .map(BaseResponse::getResponse)
+                .map(this::convertToPost);
     }
 
     private List<Post> convertToPost(final NewsfeedDTO newsfeedDTO) {

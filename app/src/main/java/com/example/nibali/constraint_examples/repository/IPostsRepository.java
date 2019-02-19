@@ -4,6 +4,8 @@ import com.example.nibali.constraint_examples.entity.Post;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+
 public interface IPostsRepository {
-    List<Post> getPosts();
+    Observable<List<Post>> getPosts();
 }
