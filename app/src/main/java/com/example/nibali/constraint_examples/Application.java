@@ -13,9 +13,6 @@ import com.example.nibali.constraint_examples.di.net.NetModule;
 import com.example.nibali.constraint_examples.di.user.UserComponent;
 import com.example.nibali.constraint_examples.di.user.UserModule;
 
-import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
-import com.mikepenz.materialdrawer.util.DrawerImageLoader;
-import com.squareup.picasso.Picasso;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.VKAccessTokenTracker;
 import com.vk.sdk.VKSdk;
@@ -45,12 +42,6 @@ public class Application extends android.app.Application  {
         vkAccessTokenTracker.startTracking();
         VKSdk.initialize(this);
 
-        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
-            @Override
-            public void set(ImageView imageView, Uri uri, Drawable placeholder, String tag) {
-                Picasso.get().load(uri).into(imageView);
-            }
-        });
     }
 
     public AppComponent getAppComponent() {

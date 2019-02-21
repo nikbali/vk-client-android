@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">MAI Tweets</string>
+    <string name="app_name">Brat</string>
     <string name="fa_heart_o">\uf08a</string>
     <string name="fa_retweet">\uf079</string>
     <string name="title_activity_navigation_profile">Profile</string>
@@ -15,5 +15,10 @@
     <string name="news">News</string>
     <string name="friends">Friends</string>
     <string name="post_image">TODO</string>
+    <string name="posts">Posts</string>
     <string name="please_wait">Please, wait ...</string>
+
+    <!--Drawer-->
+    <string name="open_drawer">Drawer Open</string>
+    <string name="close_drawer">Drawer Close</string>
 </resources>

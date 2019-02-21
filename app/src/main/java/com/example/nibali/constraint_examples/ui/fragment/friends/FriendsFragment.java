@@ -19,6 +19,7 @@ import com.example.nibali.constraint_examples.base.AbstractBaseFragment;
 import com.example.nibali.constraint_examples.entity.User;
 import com.example.nibali.constraint_examples.repository.IUsersRepository;
 import com.example.nibali.constraint_examples.ui.activity.LoginActivity;
+import com.example.nibali.constraint_examples.ui.activity.MainActivity;
 
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class FriendsFragment extends AbstractBaseFragment implements FriendsView
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mainView = inflater.inflate(R.layout.fragment_friends, container, false);
+        ((MainActivity) getActivity()).setActionBarTitle("Friends");
         initRecyclerView();
         presenter = new FriendsPresenter(this, usersRepository);
         presenter.init();
