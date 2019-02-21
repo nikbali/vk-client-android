@@ -64,7 +64,7 @@ public class NewsfeedFragment extends AbstractBaseFragment implements SwipeRefre
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_posts);
         recyclerView.setAdapter(postAdapter);
-        
+
         swipeRefreshLayout = view.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
