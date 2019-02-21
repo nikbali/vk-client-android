@@ -64,19 +64,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserHolder> {
 
         private ImageView userImageView;
         private TextView nameTextView;
-        private TextView nickNameTextView;
 
         public UserHolder(@NonNull final View itemView) {
             super(itemView);
             userImageView       = itemView.findViewById(R.id.userImageView);
-            nameTextView        = itemView.findViewById(R.id.nameTextView);
-            nickNameTextView    = itemView.findViewById(R.id.nickNameTextView);
+            nameTextView    = itemView.findViewById(R.id.nameTextView);
             itemView.setOnClickListener(user -> userClickListener.onClickUser(users.get(getLayoutPosition())));
         }
 
         public void binding(final User user){
             nameTextView.setText(user.getName());
-            nickNameTextView.setText(user.getName());
             Picasso.get().load(user.getPhoto()).into(userImageView);
         }
 

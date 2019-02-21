@@ -71,12 +71,12 @@ public class FriendsFragment extends AbstractBaseFragment implements FriendsView
 
     @Override
     public void showLoadingIndicator() {
-        Toast.makeText(getContext(), "load", Toast.LENGTH_LONG).show();
+
     }
 
     @Override
     public void hideLoadingIndicator() {
-        Toast.makeText(getContext(), "end load", Toast.LENGTH_LONG).show();
+
     }
 
     @Override
