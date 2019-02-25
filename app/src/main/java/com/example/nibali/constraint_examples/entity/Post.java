@@ -44,25 +44,25 @@ public class Post {
         this.attachments = attachments;
     }
 
-    @BindingAdapter({"app:imageUrl"})
-    public static void loadImage(ImageView view, String imageUrl) {
-        Picasso.get().load(imageUrl).into(view);
-        view.setVisibility(imageUrl != null ? View.VISIBLE : View.GONE);
-    }
-
-    @BindingAdapter("android:longText")
-    public static void setLongText(TextView view, long number) {
-        view.setText(String.valueOf(number));
-    }
-
-    @BindingAdapter("android:datetime")
-    public static void setLongText(TextView view, Date date) {
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-        String dateString = simpleDateFormat.format(date);
-        view.setText(dateString);
-    }
-
+//    @BindingAdapter({"app:imageUrl"})
+//    public static void loadImage(ImageView view, String imageUrl) {
+//        Picasso.get().load(imageUrl).into(view);
+//        view.setVisibility(imageUrl != null ? View.VISIBLE : View.GONE);
+//    }
+//
+//    @BindingAdapter("android:longText")
+//    public static void setLongText(TextView view, long number) {
+//        view.setText(String.valueOf(number));
+//    }
+//
+//    @BindingAdapter("android:datetime")
+//    public static void setLongText(TextView view, Date date) {
+//        String pattern = "yyyy-MM-dd";
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+//        String dateString = simpleDateFormat.format(date);
+//        view.setText(dateString);
+//    }
+//
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Nullable
     public String getMainPhoto(){
