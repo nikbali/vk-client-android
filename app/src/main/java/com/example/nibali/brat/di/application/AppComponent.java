@@ -1,7 +1,7 @@
 package com.example.nibali.brat.di.application;
 
 
-import com.example.nibali.brat.ui.activity.LoginActivity;
+import com.example.nibali.brat.ui.login.LoginActivity;
 import com.example.nibali.brat.di.net.NetModule;
 import com.example.nibali.brat.di.user.UserComponent;
 import com.example.nibali.brat.di.user.UserModule;

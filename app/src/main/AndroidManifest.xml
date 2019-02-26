@@ -19,7 +19,7 @@
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
 
-        <activity android:name="com.example.nibali.brat.ui.activity.LoginActivity">
+        <activity android:name="com.example.nibali.brat.ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,7 +32,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name="com.example.nibali.brat.ui.activity.MainActivity"
+            android:name="com.example.nibali.brat.ui.main.MainActivity"
             android:theme="@style/AppThemeNoActionbar" />
         </application>
 

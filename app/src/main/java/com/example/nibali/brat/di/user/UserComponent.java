@@ -1,9 +1,9 @@
 package com.example.nibali.brat.di.user;
 
 
-import com.example.nibali.brat.ui.activity.MainActivity;
-import com.example.nibali.brat.ui.fragment.friends.FriendsFragment;
-import com.example.nibali.brat.ui.fragment.news.NewsfeedFragment;
+import com.example.nibali.brat.ui.main.MainActivity;
+import com.example.nibali.brat.ui.friends.FriendsFragment;
+import com.example.nibali.brat.ui.news.NewsfeedFragment;
 
 import dagger.Subcomponent;
 

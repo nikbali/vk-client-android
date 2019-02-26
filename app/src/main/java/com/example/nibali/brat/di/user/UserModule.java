@@ -1,9 +1,9 @@
 package com.example.nibali.brat.di.user;
 
-import com.example.nibali.brat.repository.IPostsRepository;
-import com.example.nibali.brat.repository.IUsersRepository;
-import com.example.nibali.brat.repository.impl.PostsRepository;
-import com.example.nibali.brat.repository.impl.UsersRepository;
+import com.example.nibali.brat.data.network.repository.IPostsRepository;
+import com.example.nibali.brat.data.network.repository.IUsersRepository;
+import com.example.nibali.brat.data.network.repository.impl.PostsRepository;
+import com.example.nibali.brat.data.network.repository.impl.UsersRepository;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.api.model.VKApiUser;
 import dagger.Module;

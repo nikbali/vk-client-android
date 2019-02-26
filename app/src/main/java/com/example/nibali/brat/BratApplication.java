@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 
-import com.example.nibali.brat.ui.activity.LoginActivity;
+import com.example.nibali.brat.ui.login.LoginActivity;
 import com.example.nibali.brat.di.application.AppComponent;
 import com.example.nibali.brat.di.application.AppModule;
 import com.example.nibali.brat.di.application.DaggerAppComponent;
