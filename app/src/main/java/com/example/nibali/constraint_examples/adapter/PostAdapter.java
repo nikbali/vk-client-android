@@ -75,7 +75,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder>  {
             ownerNameTextView.setText(post.getOwner().getName());
             timeTextView.setText(AppUtils.getDateFromUnixTime(post.getDate().getTime()));
             Picasso.get().load(post.getMainPhoto()).into(postMainImageView);
-            titleTextView.setText(post.getText());
+            titleTextView.setText(AppUtils.unescape(post.getText()));
 
         }
     }

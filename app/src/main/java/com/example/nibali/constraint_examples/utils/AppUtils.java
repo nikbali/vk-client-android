@@ -25,4 +25,28 @@ public final  class AppUtils {
         return unixTime * 1000 > CALENDAR.getTimeInMillis() ? SHORT_DATE.format(DATE) : FULL_DATE.format(DATE);
     }
 
+    /**
+     * Замена текстовых спец. символов используемых в Vk Api
+     * @param text текст пришедший из api
+     * @return преобразованный в читабельный вид(замена пробелов и т.д)
+     */
+    public static String unescape(String text) {
+        if (text == null) {
+            return null;
+        }
+
+        return text.replace("&amp;", "&")
+                .replace("&quot;", "\"")
+                .replace("<br>", "\n")
+                .replace("&gt;", ">")
+                .replace("&lt;", "<")
+                .replace("<br/>", "\n")
+                .replace("&ndash;", "-")
+                .trim();
+
+        //Баг в API
+        //amp встречается в сообщении, br в Ответах тип comment_photo, gt lt на стене - баг API, ndash в статусе когда аудио транслируется
+        //quot в тексте сообщения из LongPoll - то есть в уведомлении
+    }
+
 }

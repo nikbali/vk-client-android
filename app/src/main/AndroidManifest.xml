@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/mai"
+        android:icon="@mipmap/articuno"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/mai"
+        android:roundIcon="@mipmap/articuno"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionbar"
         android:name=".Application"
