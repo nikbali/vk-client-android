@@ -58,20 +58,6 @@ public class FriendsFragment extends AbstractBaseFragment implements FriendsView
         recyclerView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void showError(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showLoadingIndicator() {
-
-    }
-
-    @Override
-    public void hideLoadingIndicator() {
-
-    }
 
     @Override
     public void onClickUser(User user) {
@@ -82,4 +68,20 @@ public class FriendsFragment extends AbstractBaseFragment implements FriendsView
         userAdapter = new UserAdapter( this);
         recyclerView.setAdapter(userAdapter);
     }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
 }

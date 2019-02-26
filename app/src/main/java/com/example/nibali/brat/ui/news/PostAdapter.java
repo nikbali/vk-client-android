@@ -13,14 +13,15 @@ import com.example.nibali.brat.data.entity.Post;
 import com.example.nibali.brat.utils.AppUtils;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder>  {
 
     private List<Post> posts;
 
-    public PostAdapter(List<Post> posts) {
-        this.posts = posts;
+    public PostAdapter() {
+        this.posts = new ArrayList<>();;
     }
 
     public void setData(List<Post> data) {

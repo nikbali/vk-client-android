@@ -6,8 +6,8 @@ import javax.inject.Inject;
 
 public class FriendsPresenter {
 
-    FriendsView view;
-    IUsersRepository usersRepository;
+    private final FriendsView view;
+    private final IUsersRepository usersRepository;
 
     @Inject
     public FriendsPresenter(FriendsView view, IUsersRepository usersRepository) {
@@ -17,9 +17,9 @@ public class FriendsPresenter {
 
     public void init() {
         usersRepository.getFriends()
-                .doOnSubscribe((r) -> view.showLoadingIndicator())
-                .doAfterTerminate(() -> view.hideLoadingIndicator())
-                .subscribe(listUser -> view.showFriends(listUser),
-                            throwable -> view.showError(throwable.fillInStackTrace().toString()));
+                .doOnSubscribe((r) -> view.showLoading())
+                .doAfterTerminate(view::hideLoading)
+                .subscribe(view::showFriends,
+                            throwable -> view.onError(throwable.fillInStackTrace().toString()));
     }
 }

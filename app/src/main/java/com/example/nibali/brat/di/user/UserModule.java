@@ -4,6 +4,9 @@ import com.example.nibali.brat.data.network.repository.IPostsRepository;
 import com.example.nibali.brat.data.network.repository.IUsersRepository;
 import com.example.nibali.brat.data.network.repository.impl.PostsRepository;
 import com.example.nibali.brat.data.network.repository.impl.UsersRepository;
+import com.example.nibali.brat.ui.news.NewsfeedPresenter;
+import com.example.nibali.brat.ui.news.NewsfeedPresenterImpl;
+import com.example.nibali.brat.ui.news.NewsfeedView;
 import com.vk.sdk.VKAccessToken;
 import com.vk.sdk.api.model.VKApiUser;
 import dagger.Module;
@@ -44,6 +47,12 @@ public class UserModule {
     @UserScope
     IUsersRepository provideIUsersRepository(Retrofit retrofit) {
         return new UsersRepository(token, retrofit);
+    }
+
+    @Provides
+    @UserScope
+    NewsfeedPresenter<NewsfeedView> provideNewsfeedPresenter(IPostsRepository iPostsRepository) {
+        return new NewsfeedPresenterImpl<>(iPostsRepository);
     }
 
 }

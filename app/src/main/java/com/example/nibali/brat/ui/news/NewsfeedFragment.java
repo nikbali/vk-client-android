@@ -23,15 +23,14 @@ import java.util.List;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
 
-public class NewsfeedFragment extends AbstractBaseFragment implements SwipeRefreshLayout.OnRefreshListener{
+public class NewsfeedFragment extends AbstractBaseFragment implements SwipeRefreshLayout.OnRefreshListener, NewsfeedView{
 
     @Inject
-    IPostsRepository postsRepository;
+    NewsfeedPresenter<NewsfeedView> presenter;
 
     private RecyclerView recyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private PostAdapter postAdapter;
-    private List<Post> posts = new ArrayList<>();
 
 
     @Override
@@ -43,9 +42,9 @@ public class NewsfeedFragment extends AbstractBaseFragment implements SwipeRefre
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        postsRepository.getPosts().subscribe(listUser -> posts.addAll(listUser),
-                throwable -> Toast.makeText(getContext(), throwable.fillInStackTrace().toString(), Toast.LENGTH_LONG).show());
-        postAdapter = new PostAdapter(posts);
+
+        postAdapter = new PostAdapter();
+        presenter.onAttach(this);
     }
 
 
@@ -61,7 +60,7 @@ public class NewsfeedFragment extends AbstractBaseFragment implements SwipeRefre
         View view = inflater.inflate(R.layout.fragment_news, container, false);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_posts);
         recyclerView.setAdapter(postAdapter);
-
+        presenter.showPosts();
         swipeRefreshLayout = view.findViewById(R.id.swipe_container);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -74,8 +73,25 @@ public class NewsfeedFragment extends AbstractBaseFragment implements SwipeRefre
 
     @Override
     public void onRefresh() {
-        postsRepository.getPosts().subscribe(listUser -> postAdapter.setData(listUser),
-                throwable -> Toast.makeText(getContext(), "Ошибка загрузки данных!", Toast.LENGTH_LONG).show());
+        presenter.showPosts();
         swipeRefreshLayout.setRefreshing(false);
+    }
+
+
+    @Override
+    public void setPosts(List<Post> postList) {
+        postAdapter.setData(postList);
+    }
+
+    @Override
+    public void showLoading() {
+    }
+    @Override
+    public void hideLoading() {
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }
