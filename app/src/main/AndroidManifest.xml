@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.nibali.constraint_examples">
+    package="com.example.nibali.brat">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,14 +12,14 @@
         android:roundIcon="@mipmap/articuno"
         android:supportsRtl="true"
         android:theme="@style/AppThemeNoActionbar"
-        android:name=".Application"
+        android:name="com.example.nibali.brat.BratApplication"
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity android:name="com.vk.sdk.VKServiceActivity"
             android:label="ServiceActivity"
             android:theme="@style/VK.Transparent" />
 
-        <activity android:name=".ui.activity.LoginActivity">
+        <activity android:name="com.example.nibali.brat.ui.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -32,7 +32,7 @@
             android:resource="@array/preloaded_fonts" />
 
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="com.example.nibali.brat.ui.activity.MainActivity"
             android:theme="@style/AppThemeNoActionbar" />
         </application>
 
