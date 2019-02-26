@@ -24,6 +24,7 @@ import com.vk.sdk.VKAccessToken;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -97,7 +98,7 @@ public class PostsRepository implements IPostsRepository {
                 posts.add(
                         new Post(vkNewsDTO.getPost_id(),
                                 groupMap.get(Math.abs(vkNewsDTO.getSource_id())),
-                                new Date(vkNewsDTO.getDate() * 1000L),
+                                LocalDateTime.ofInstant(Instant.ofEpochMilli(vkNewsDTO.getDate() * 1000L), ZoneId.systemDefault()),
                                 vkNewsDTO.getText(),
                                 0,
                                 0,

@@ -28,13 +28,13 @@ import lombok.NoArgsConstructor;
 public class Post {
     private int id;
     private Owner owner;
-    private Date date;
+    private LocalDateTime date;
     private String text;
     private int reposts;
     private int likes;
     private List<? extends Attachment> attachments;
 
-    public Post(int id, Owner owner, Date date, String text, int reposts, int likes, List<? extends Attachment> attachments) {
+    public Post(int id, Owner owner, LocalDateTime date, String text, int reposts, int likes, List<? extends Attachment> attachments) {
         this.id = id;
         this.owner = owner;
         this.date = date;

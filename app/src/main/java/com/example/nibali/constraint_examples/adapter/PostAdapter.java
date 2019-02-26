@@ -73,7 +73,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder>  {
         public void binding(Post post){
             Picasso.get().load(post.getOwner().getPhoto()).into(ownerAvatarImageView);
             ownerNameTextView.setText(post.getOwner().getName());
-            timeTextView.setText(AppUtils.getDateFromUnixTime(post.getDate().getTime()));
+            timeTextView.setText(AppUtils.getDateFromUnixTime(post.getDate()));
             Picasso.get().load(post.getMainPhoto()).into(postMainImageView);
             titleTextView.setText(AppUtils.unescape(post.getText()));
 
